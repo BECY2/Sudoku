@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Newtonsoft.Json.Linq;
+using System;
 
 namespace Sudoku
 {
@@ -19,8 +20,10 @@ namespace Sudoku
     /// </summary>
     public partial class MainWindow : Window
     {
+        public int Mistakes = 0;
         public int SelectedNum = 0;
         public JToken solution;
+        public int[] CountNums = new int[9]; 
         public MainWindow()
         {
             InitializeComponent();
@@ -33,6 +36,8 @@ namespace Sudoku
                 b.HorizontalAlignment = HorizontalAlignment.Stretch;
                 b.VerticalAlignment = VerticalAlignment.Stretch;
                 b.Background = new SolidColorBrush(Colors.White);
+                b.Margin = new Thickness(0,10,0,10);
+                b.FontSize = 20;
                 b.Click += SetNum;
                 Grid.SetColumn(b, i);
                 NButtons.Children.Add(b);
@@ -43,16 +48,8 @@ namespace Sudoku
 
         private void SetNum(object sender, RoutedEventArgs s)
         {
-
-            foreach (var childs in NButtons.Children)
-            {
-                Button child = childs as Button;
-                child.Background = new SolidColorBrush(Colors.White);
-                child.IsEnabled = true;
-            }
             Button self = sender as Button;
-            SelectedNum = Convert.ToInt32(self.Content);
-            self.IsEnabled = false;
+            HighLight(self.Content.ToString());
         }
 
         private void PlaceNum(object sender, RoutedEventArgs s) { 
@@ -70,13 +67,18 @@ namespace Sudoku
                     b.Click -= PlaceNum;
                     b.Click += Find;
                     b.Foreground = new SolidColorBrush(Colors.Blue);
-                    b.Background = new SolidColorBrush(Colors.White);
+                    b.Background = new SolidColorBrush(Colors.AliceBlue);
+                    CountNums[sol - 1]++;
+                    Count.Text = $"9/{CountNums[sol - 1]}";
+                    Num(sol.ToString());
                 }
                 else {
 
                     b.Content = SelectedNum;
                     b.Foreground = new SolidColorBrush(Colors.Red);
                     b.Background = new SolidColorBrush(Colors.White);
+                    Mistakes++;
+                    Mistake.Text = $"Mistakes: {Mistakes}";
                 }
             }
 
@@ -101,18 +103,53 @@ namespace Sudoku
         private void Find(object sender, RoutedEventArgs e) {
 
             Button b = sender as Button;
+            HighLight(b.Content.ToString());
+        }
 
-            foreach (var childs in MainGrid.Children) {
+        private void HighLight(string num) {
+
+            foreach (var childs in MainGrid.Children)
+            {
 
                 Button child = childs as Button;
-                if (child.Content.ToString() == b.Content.ToString())
+                //if (child.Foreground == new SolidColorBrush(Colors.Red)) { 
+                
+                //    child.Background = new SolidColorBrush(Colors.Gray);
+                //    child.Content = "";
+                //}
+                if (child.Content.ToString() == num)
                 {
                     child.Background = new SolidColorBrush(Colors.AliceBlue);
                 }
-                else if (child.Content != "") {
+                else if (child.Content != "")
+                {
                     child.Background = new SolidColorBrush(Colors.White);
                 }
             }
+            Num(num);
+       
+        }
+
+        private void Num(string num) {
+
+            SelectedNum = Convert.ToInt32(num);
+            foreach (var childs in NButtons.Children)
+            {
+                Button child = childs as Button;
+                child.Background = new SolidColorBrush(Colors.White);
+                child.IsEnabled = true;
+                if (child.Content.ToString() == num)
+                {
+                    child.IsEnabled = false;
+                }
+                if (CountNums[Convert.ToInt32(child.Content) - 1] == 9) {
+                    child.IsEnabled = false;
+                    SelectedNum = 0;
+                }
+                
+            }
+            Count.Text = $"9/{CountNums[Convert.ToInt32(num)-1]}";
+            
         }
 
         private void CreateGrid()
@@ -124,7 +161,7 @@ namespace Sudoku
                 var table = tableJson.GetValue("newboard")["grids"][0];
                 var vals = table["value"];
                 solution = table["solution"];
-                MessageBox.Show(table["difficulty"].ToString());
+                Time.Text = table["difficulty"].ToString();
                 for (int i = 0; i < 9; i++)
                 {
                     MainGrid.RowDefinitions.Add(new());
@@ -143,6 +180,7 @@ namespace Sudoku
                             b.Content = val;
                             b.Background = new SolidColorBrush(Colors.White);
                             b.Click += Find;
+                            CountNums[val - 1]++;
                         }
                         b.HorizontalAlignment = HorizontalAlignment.Stretch;
                         b.VerticalAlignment = VerticalAlignment.Stretch;
