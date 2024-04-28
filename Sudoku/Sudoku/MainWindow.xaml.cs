@@ -28,6 +28,7 @@ namespace Sudoku
         {
             InitializeComponent();
 
+
             for (int i = 0; i < 9; i++)
             {
                 NButtons.ColumnDefinitions.Add(new());
@@ -42,6 +43,8 @@ namespace Sudoku
                 Grid.SetColumn(b, i);
                 NButtons.Children.Add(b);
             }
+
+            //MessageBox.Show(child.Foreground.ToString());
 
             CreateGrid();
         }
@@ -67,7 +70,7 @@ namespace Sudoku
                     b.Click -= PlaceNum;
                     b.Click += Find;
                     b.Foreground = new SolidColorBrush(Colors.Blue);
-                    b.Background = new SolidColorBrush(Colors.AliceBlue);
+                    b.Background = new SolidColorBrush(Colors.LightBlue);
                     CountNums[sol - 1]++;
                     Count.Text = $"9/{CountNums[sol - 1]}";
                     Num(sol.ToString());
@@ -104,6 +107,8 @@ namespace Sudoku
 
             Button b = sender as Button;
             HighLight(b.Content.ToString());
+            HighLightWrong(Grid.GetRow(b), Grid.GetColumn(b), b.Content.ToString());
+
         }
 
         private void HighLight(string num) {
@@ -113,21 +118,69 @@ namespace Sudoku
 
                 Button child = childs as Button;
                 //if (child.Foreground == new SolidColorBrush(Colors.Red)) { 
-                
+
                 //    child.Background = new SolidColorBrush(Colors.Gray);
                 //    child.Content = "";
                 //}
                 if (child.Content.ToString() == num)
                 {
-                    child.Background = new SolidColorBrush(Colors.AliceBlue);
+                    if(child.Foreground.ToString() == "#FFFF0000") child.Background = new SolidColorBrush(Colors.PaleVioletRed);
+                    else child.Background = new SolidColorBrush(Colors.LightBlue);
                 }
                 else if (child.Content != "")
                 {
                     child.Background = new SolidColorBrush(Colors.White);
                 }
+                else {
+                    child.Background = new SolidColorBrush(Colors.LightGray);
+                }
             }
             Num(num);
        
+        }
+
+        private void HighLightWrong(int row, int col, string num) {
+
+            foreach (var childs in MainGrid.Children)
+            {
+
+                Button child = childs as Button;
+                if (child.Content.ToString() == "")
+                {
+                    child.Background = new SolidColorBrush(Colors.LightGray);
+                }
+                else if (child.Content.ToString() != num) {
+                    child.Background = new SolidColorBrush(Colors.White);
+                }
+            }
+
+            int cubeRow = row / 3; 
+            int cubeCol = col / 3;
+            for (int i = 0; i < 9; i++)
+            {
+                for (int f = 0; f < 9; f++)
+                {
+                    if (i == row && f == col) {
+                        Button b = MainGrid.Children[9 * i + f] as Button;
+                        b.Background = new SolidColorBrush(Colors.LightBlue);
+                    }
+                    else if (i == row)
+                    {
+                        Button b = MainGrid.Children[9 * i + f] as Button;
+                        b.Background = new SolidColorBrush(Colors.Gray);
+                    }
+                    else if (f == col) {
+
+                        Button b = MainGrid.Children[9 * i + f] as Button;
+                        b.Background = new SolidColorBrush(Colors.Gray);
+                    }
+                    else if (i>=cubeRow*3 && i< (cubeRow+1) * 3 && f>= cubeCol*3 && f<(cubeCol+1)*3) {
+
+                        Button b = MainGrid.Children[9 * i + f] as Button;
+                        b.Background = new SolidColorBrush(Colors.Gray);
+                    }
+                }
+            }
         }
 
         private void Num(string num) {
@@ -143,14 +196,18 @@ namespace Sudoku
                     child.IsEnabled = false;
                 }
                 if (CountNums[Convert.ToInt32(child.Content) - 1] == 9) {
-                    child.IsEnabled = false;
-                    SelectedNum = 0;
+                    child.Visibility = Visibility.Collapsed;
+                    //child.IsEnabled = false;
+                    if (child.Content.ToString() == num)
+                        SelectedNum = 0;
                 }
                 
             }
             Count.Text = $"9/{CountNums[Convert.ToInt32(num)-1]}";
             
         }
+
+
 
         private void CreateGrid()
         {
@@ -174,6 +231,7 @@ namespace Sudoku
                         b.FontSize = 20;
                         if (val == 0) { 
                             b.Content = "";
+                            b.Background = new SolidColorBrush(Colors.LightGray);
                             b.Click += PlaceNum;
                         }
                         else { 
