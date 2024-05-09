@@ -55,24 +55,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Becy\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\buczko.bela\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Becy\\source\\repos\\Sudoku\\Sudoku\\Sudoku\\Sudoku.csproj",
+      "projectUniqueName": "C:\\Users\\buczko.bela\\Documents\\Sudoku\\Sudoku\\Sudoku\\Sudoku.csproj",
       "projectName": "Sudoku",
-      "projectPath": "C:\\Users\\Becy\\source\\repos\\Sudoku\\Sudoku\\Sudoku\\Sudoku.csproj",
-      "packagesPath": "C:\\Users\\Becy\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Becy\\source\\repos\\Sudoku\\Sudoku\\Sudoku\\obj\\",
+      "projectPath": "C:\\Users\\buczko.bela\\Documents\\Sudoku\\Sudoku\\Sudoku\\Sudoku.csproj",
+      "packagesPath": "C:\\Users\\buczko.bela\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\buczko.bela\\Documents\\Sudoku\\Sudoku\\Sudoku\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Becy\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\buczko.bela\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -80,7 +75,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -93,9 +87,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "default"
       }
     },
     "frameworks": {
@@ -118,24 +109,6 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[7.0.14, 7.0.14]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[7.0.14, 7.0.14]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[7.0.14, 7.0.14]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[7.0.14, 7.0.14]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
@@ -144,7 +117,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
       }
     }
   }

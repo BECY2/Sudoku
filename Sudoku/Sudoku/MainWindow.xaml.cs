@@ -18,6 +18,14 @@ namespace Sudoku
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+
+    public static class Inner {
+
+        public static bool api;
+        public static string difficulty;
+    }
+
     public partial class MainWindow : Window
     {
         public int Mistakes = 0;
@@ -26,31 +34,58 @@ namespace Sudoku
         public int[] CountNums = new int[9];
         //public List<List<int>> TheGrid = new List<List<int>>();
         public int[] Numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-        int[,] grid;
+        int[,] grid = new int[9,9];
         public int[,] solvedGrid = new int[9, 9];
         public MainWindow()
         {
             InitializeComponent();
-
-            grid = GeneratePuzzle();
-
-            int[,] newGrid = grid.Clone() as int[,];
-
-            SudokuSolver solve = new SudokuSolver(newGrid);
-            if(solve.SolveSudoku())
-                solvedGrid = solve.board;
-            string kiir = "";
-
-            for (int i = 0; i < 9; i++)
+            if (Inner.api == false)
             {
-                for (int f = 0; f < 9; f++)
-                {
-                    kiir += grid[i, f].ToString();
-                }
-                kiir += "\n";
-            }
+                Time.Text = Inner.difficulty;
+                grid = GeneratePuzzle();
 
-            MessageBox.Show(kiir);
+                int[,] newGrid = grid.Clone() as int[,];
+
+                SudokuSolver solve = new SudokuSolver(newGrid);
+                if (solve.SolveSudoku())
+                    solvedGrid = solve.board;
+            }
+            else
+            {
+
+                using (WebClient wc = new WebClient())
+                {
+
+
+                    var json = wc.DownloadString("https://sudoku-api.vercel.app/api/dosuku");
+                    JObject tableJson = JObject.Parse(json);
+                    var table = tableJson.GetValue("newboard")["grids"][0];
+                    var vals = table["value"];
+                    solution = table["solution"];
+                    Time.Text = table["difficulty"].ToString();
+
+                    for (int i = 0; i < 9; i++)
+                    {
+                        for (int f = 0; f < 9; f++)
+                        {
+                            grid[i, f] = Convert.ToInt32(vals[i][f]);
+                            solvedGrid[i, f] = Convert.ToInt32(solution[i][f]);
+                        }
+                    }
+                }
+            }
+            //string kiir = "";
+
+            //for (int i = 0; i < 9; i++)
+            //{
+            //    for (int f = 0; f < 9; f++)
+            //    {
+            //        kiir += grid[i, f].ToString();
+            //    }
+            //    kiir += "\n";
+            //}
+
+            //MessageBox.Show(kiir);
 
 
 
@@ -84,7 +119,22 @@ namespace Sudoku
             {
                 //solvedGrid = grid;
                 // Remove cells to create a puzzle (difficulty can be adjusted here)
-                RemoveCells(grid, GridSize * GridSize / 2); // Adjust denominator for difficulty
+                float diff = 0;
+                switch(Inner.difficulty)
+                {
+                    case "Easy":
+                        diff = 3;
+                        break;
+                    case "Medium":
+                        diff = 1.8f;
+                        break;
+                    case "Hard":
+                        diff = 1.3f;
+                        break;
+                }
+
+
+                RemoveCells(grid, Convert.ToInt32(GridSize * GridSize / diff)); // Adjust denominator for difficulty
                 return grid;
             }
 
@@ -369,14 +419,7 @@ namespace Sudoku
 
         private void CreateGrid()
         {
-            using (WebClient wc = new WebClient())
-            {
-                //var json = wc.DownloadString("https://sudoku-api.vercel.app/api/dosuku");
-                //JObject tableJson = JObject.Parse(json);
-                //var table = tableJson.GetValue("newboard")["grids"][0];
-                //var vals = table["value"];
-                //solution = table["solution"];
-                //Time.Text = table["difficulty"].ToString();
+
                 for (int i = 0; i < 9; i++)
                 {
                     MainGrid.RowDefinitions.Add(new());
@@ -413,7 +456,6 @@ namespace Sudoku
 
                 //MessageBox.Show(table["value"].ToString());
 
-            }
         }
     }
     public static class MSSystemExtenstions

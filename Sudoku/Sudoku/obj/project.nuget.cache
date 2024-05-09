@@ -1,14 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "ssE7lKWI+wNq2Wn4KOTMPjO7c7DT+yVqGhWsbESSNFEvAt4dXAYCHA66suheTXuZ8uGYEKKZfdlYFokgebIEyQ==",
+  "dgSpecHash": "rg1crIPpWGsRhGhGEbDYXQFM4LgWxMQ1eAkRVZUyIsswwFox/Rw700Ic0w+9E1eQjCcIFuswyceMSWqE1Uji5Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Becy\\source\\repos\\Sudoku\\Sudoku\\Sudoku\\Sudoku.csproj",
+  "projectFilePath": "C:\\Users\\buczko.bela\\Documents\\Sudoku\\Sudoku\\Sudoku\\Sudoku.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Becy\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
-    "C:\\Users\\Becy\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.14\\microsoft.windowsdesktop.app.ref.7.0.14.nupkg.sha512",
-    "C:\\Users\\Becy\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.14\\microsoft.netcore.app.ref.7.0.14.nupkg.sha512",
-    "C:\\Users\\Becy\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\7.0.14\\microsoft.aspnetcore.app.ref.7.0.14.nupkg.sha512",
-    "C:\\Users\\Becy\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\7.0.14\\microsoft.netcore.app.host.win-x64.7.0.14.nupkg.sha512"
+    "C:\\Users\\buczko.bela\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
   ],
   "logs": []
 }
