@@ -74,18 +74,6 @@ namespace Sudoku
                     }
                 }
             }
-            //string kiir = "";
-
-            //for (int i = 0; i < 9; i++)
-            //{
-            //    for (int f = 0; f < 9; f++)
-            //    {
-            //        kiir += grid[i, f].ToString();
-            //    }
-            //    kiir += "\n";
-            //}
-
-            //MessageBox.Show(kiir);
 
 
 
@@ -114,11 +102,8 @@ namespace Sudoku
         {
             int[,] grid = new int[GridSize, GridSize];
 
-            // Fill the grid with a solved Sudoku (backtracking)
             if (FillGrid(grid, 0, 0))
             {
-                //solvedGrid = grid;
-                // Remove cells to create a puzzle (difficulty can be adjusted here)
                 float diff = 0;
                 switch(Inner.difficulty)
                 {
@@ -134,18 +119,16 @@ namespace Sudoku
                 }
 
 
-                RemoveCells(grid, Convert.ToInt32(GridSize * GridSize / diff)); // Adjust denominator for difficulty
+                RemoveCells(grid, Convert.ToInt32(GridSize * GridSize / diff));
                 return grid;
             }
-
-            // Backtracking failed, retry
             return GeneratePuzzle();
         }
 
 
         private bool FillGrid(int[,] grid, int row, int col)
         {
-            // If we've reached the end of the grid, the Sudoku is solved
+
             if (col == GridSize)
             {
                 col = 0;
@@ -157,19 +140,16 @@ namespace Sudoku
                 return true;
             }
 
-            // If the cell is already filled, move on
             if (grid[row, col] != 0)
             {
                 return FillGrid(grid, row, col + 1);
             }
-
-            // Try all possible numbers (1-9)
-            //Numbers.Shuffle<int>();
+            Numbers.Shuffle<int>();
             for (int num = 1; num <= GridSize; num++)
             {
                 if (row == 0)
                 {
-                    Numbers.Shuffle<int>();
+              
                     num = Numbers[num - 1];
                 }
 
@@ -177,24 +157,21 @@ namespace Sudoku
                 {
                     grid[row, col] = num;
 
-                    // Recursively fill the remaining cells
+
                     if (FillGrid(grid, row, col + 1))
                     {
                         return true;
                     }
-
-                    // Backtrack if placement is invalid
                     grid[row, col] = 0;
                 }
             }
 
-            // No valid placement found, backtrack
             return false;
         }
 
         private bool IsValidPlacement(int[,] grid, int row, int col, int num)
         {
-            // Check row and column for duplicates
+
             for (int i = 0; i < GridSize; i++)
             {
                 if (grid[row, i] == num || grid[i, col] == num)
@@ -203,7 +180,6 @@ namespace Sudoku
                 }
             }
 
-            // Check 3x3 subgrid for duplicates
             int boxStartRow = row - row % 3;
             int boxStartCol = col - col % 3;
 
@@ -230,7 +206,6 @@ namespace Sudoku
                 int row = random.Next(GridSize);
                 int col = random.Next(GridSize);
 
-                // Skip already empty cells
                 if (grid[row, col] != 0)
                 {
                     grid[row, col] = 0;
@@ -284,6 +259,11 @@ namespace Sudoku
             if (Check())
             {
                 MessageBox.Show("Win!");
+                foreach (var childs in MainGrid.Children)
+                {
+                    Button bu = childs as Button;
+                    bu.Background = new SolidColorBrush(Colors.White);
+                }
             }
         }
 
