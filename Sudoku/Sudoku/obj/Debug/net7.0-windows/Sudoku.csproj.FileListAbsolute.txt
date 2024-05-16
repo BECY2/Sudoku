@@ -49,3 +49,4 @@ C:\Users\buczko.bela\Documents\Sudoku\Sudoku\Sudoku\obj\Debug\net7.0-windows\Fir
 C:\Users\buczko.bela\Documents\Sudoku\Sudoku\Sudoku\obj\Debug\net7.0-windows\First.baml
 C:\Users\Becy\source\repos\Sudoku\Sudoku\Sudoku\obj\Debug\net7.0-windows\First.g.cs
 C:\Users\Becy\source\repos\Sudoku\Sudoku\Sudoku\obj\Debug\net7.0-windows\First.baml
+C:\Users\buczko.bela\Documents\Sudoku\Sudoku\Sudoku\obj\Debug\net7.0-windows\Sudoku.sourcelink.json

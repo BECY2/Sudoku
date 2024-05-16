@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Sudoku
-build_property.ProjectDir = C:\Users\Becy\source\repos\Sudoku\Sudoku\Sudoku\
+build_property.ProjectDir = C:\Users\buczko.bela\Documents\Sudoku\Sudoku\Sudoku\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

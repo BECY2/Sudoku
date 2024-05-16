@@ -226,6 +226,8 @@ namespace Sudoku
             Button b = sender as Button;
             int row = Grid.GetRow(b);
             int col = Grid.GetColumn(b);
+
+
             if (SelectedNum != 0)
             {
 
@@ -249,6 +251,7 @@ namespace Sudoku
                 {
 
                     b.Content = SelectedNum;
+                    b.PreviewMouseDown += EraseWrong;
                     b.Foreground = new SolidColorBrush(Colors.Red);
                     b.Background = new SolidColorBrush(Colors.PaleVioletRed);
                     Mistakes++;
@@ -265,6 +268,16 @@ namespace Sudoku
                     bu.Background = new SolidColorBrush(Colors.White);
                 }
             }
+        }
+
+        private void EraseWrong(object sender, MouseButtonEventArgs e) { 
+            if (e.RightButton == MouseButtonState.Pressed) {
+                Button b = sender as Button;
+                b.Content = "";
+                b.Background = new SolidColorBrush(Colors.LightGray);
+                b.PreviewMouseDown -= EraseWrong;
+            }
+           
         }
 
         private bool Check()
